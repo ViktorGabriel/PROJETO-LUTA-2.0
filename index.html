@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Battle Arena - Projeto Luta 2.0</title>
+    <!-- Google Fonts: Cinzel para títulos épicos e Outfit para UI limpa -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header class="game-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <span class="game-badge">PORTFÓLIO RPG</span>
+                <h1 class="game-title">Arena dos Campeões</h1>
+            </div>
+            <div class="header-actions">
+                <a href="lore.html" class="btn-secondary lore-nav-btn" title="Ver Histórias e Atributos de Todos os Personagens">
+                    📜 Lores & Bestiário
+                </a>
+                <button id="soundToggle" class="btn-icon" title="Alternar Som" aria-label="Alternar Som">
+                    <span class="sound-icon">🔊</span>
+                </button>
+                <button id="resetBattleBtn" class="btn-secondary" title="Reiniciar Partida">
+                    🔄 Reiniciar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="game-container">
+        <!-- Barra de Configuração / Seleção Rápida com Miniaturas -->
+        <section class="selection-panel">
+            <div class="selection-column">
+                <div class="selection-title-row">
+                    <span class="selection-label">⚔️ Herói:</span>
+                    <select id="heroSelect" class="custom-select-styled">
+                        <option value="knight" selected>Guerreiro Paladino (Viktor)</option>
+                        <option value="sorcerer">Mago Arcano (Viktor)</option>
+                        <option value="archer">Arqueira Caçadora (Lyra)</option>
+                        <option value="rogue">Ladino Assassino (Sombra)</option>
+                        <option value="cleric">Clérigo Sagrado (Ildor)</option>
+                        <option value="berserker">Bárbaro Berserker (Krag)</option>
+                    </select>
+                </div>
+                <div class="character-picker" id="heroPicker">
+                    <button type="button" class="picker-btn active" data-value="knight" title="Guerreiro Paladino">
+                        <img src="assets/images/knight.jpg" alt="Guerreiro" class="picker-thumb">
+                        <span class="picker-name">Guerreiro</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="sorcerer" title="Mago Arcano">
+                        <img src="assets/images/sorcerer.jpg" alt="Mago" class="picker-thumb">
+                        <span class="picker-name">Mago</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="archer" title="Arqueira Caçadora">
+                        <img src="assets/images/archer.jpg" alt="Arqueira" class="picker-thumb">
+                        <span class="picker-name">Arqueira</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="rogue" title="Ladino Assassino">
+                        <img src="assets/images/rogue.jpg" alt="Ladino" class="picker-thumb">
+                        <span class="picker-name">Ladino</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="cleric" title="Clérigo Sagrado">
+                        <img src="assets/images/cleric.jpg" alt="Clérigo" class="picker-thumb">
+                        <span class="picker-name">Clérigo</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="berserker" title="Bárbaro Berserker">
+                        <img src="assets/images/berserker.jpg" alt="Bárbaro" class="picker-thumb">
+                        <span class="picker-name">Bárbaro</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="turn-indicator" id="turnIndicator">
+                <span class="turn-dot"></span>
+                <span class="turn-text">Seu Turno: Escolha uma Ação</span>
+            </div>
+
+            <div class="selection-column">
+                <div class="selection-title-row">
+                    <span class="selection-label">👹 Oponente:</span>
+                    <select id="monsterSelect" class="custom-select-styled">
+                        <optgroup label="👑 Chefes Supremos (Bosses)">
+                            <option value="goblinKing">👑 Rei dos Goblins (Fumaça & Horda)</option>
+                            <option value="ancientColossus">👑 Colosso Ancestral (Terremoto)</option>
+                        </optgroup>
+                        <optgroup label="Inimigos Comuns">
+                            <option value="bigMonster" selected>Golem de Lava (Tanque)</option>
+                            <option value="littleMonster">Goblin Ladrão (Esquivo)</option>
+                            <option value="skeletonArcher">Esqueleto Arqueiro (Distância)</option>
+                            <option value="goblinShaman">Xamã Goblin (Cura & Hex)</option>
+                            <option value="wildWolf">Lobo da Noite (Sangramento)</option>
+                            <option value="mimic">Mímico Devorador (Emboscada)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="character-picker" id="monsterPicker">
+                    <button type="button" class="picker-btn boss-picker-btn" data-value="goblinKing" title="👑 Rei dos Goblins (Chefe)">
+                        <img src="assets/images/goblin_king.jpg" alt="Rei dos Goblins" class="picker-thumb">
+                        <span class="picker-name">👑 Rei Goblin</span>
+                    </button>
+                    <button type="button" class="picker-btn boss-picker-btn" data-value="ancientColossus" title="👑 Colosso Ancestral (Chefe Titânico)">
+                        <img src="assets/images/ancient_colossus.jpg" alt="Colosso Ancestral" class="picker-thumb">
+                        <span class="picker-name">👑 Colosso</span>
+                    </button>
+                    <button type="button" class="picker-btn active" data-value="bigMonster" title="Golem de Lava">
+                        <img src="assets/images/big_monster.jpg" alt="Golem de Lava" class="picker-thumb">
+                        <span class="picker-name">Golem</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="littleMonster" title="Goblin Ladrão">
+                        <img src="assets/images/little_monster.jpg" alt="Goblin Ladrão" class="picker-thumb">
+                        <span class="picker-name">Goblin</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="skeletonArcher" title="Esqueleto Arqueiro">
+                        <img src="assets/images/skeleton_archer.jpg" alt="Esqueleto" class="picker-thumb">
+                        <span class="picker-name">Esqueleto</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="goblinShaman" title="Xamã Goblin">
+                        <img src="assets/images/goblin_shaman.jpg" alt="Xamã" class="picker-thumb">
+                        <span class="picker-name">Xamã</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="wildWolf" title="Lobo da Noite">
+                        <img src="assets/images/wild_wolf.jpg" alt="Lobo" class="picker-thumb">
+                        <span class="picker-name">Lobo</span>
+                    </button>
+                    <button type="button" class="picker-btn" data-value="mimic" title="Mímico Baú Falso">
+                        <img src="assets/images/mimic.jpg" alt="Mímico" class="picker-thumb">
+                        <span class="picker-name">Mímico</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arena de Luta Principal -->
+        <section class="fightarea" id="fightArena">
+            <!-- Card do Herói -->
+            <article id="char" class="fighter-card hero-card">
+                <div class="card-glow"></div>
+                <div class="floating-damage-container" id="charDamageContainer"></div>
+                
+                <div class="avatar-wrapper">
+                    <img id="charAvatar" src="assets/images/knight.jpg" alt="Avatar do Herói" class="fighter-avatar">
+                    <span class="class-tag" id="charClassTag">Cavaleiro</span>
+                </div>
+
+                <div class="fighter-info">
+                    <div class="name-status">
+                        <strong class="name" id="charName">Viktor</strong>
+                        <span class="hp-numeric" id="charHpText">100 / 100 HP</span>
+                    </div>
+
+                    <div class="lifebar-wrapper">
+                        <div class="lifebar">
+                            <div class="bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="attributes-grid">
+                        <div class="attr-pill" title="Poder de Ataque">
+                            <span class="attr-icon">⚔️</span>
+                            <span class="attr-val" id="charAtk">10 Atk</span>
+                        </div>
+                        <div class="attr-pill" title="Defesa / Absorção">
+                            <span class="attr-icon">🛡️</span>
+                            <span class="attr-val" id="charDef">8 Def</span>
+                        </div>
+                        <div class="attr-pill" title="Poções Restantes">
+                            <span class="attr-icon">🧪</span>
+                            <span class="attr-val" id="charPotions">2 Poções</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel de Habilidades e Comandos do Jogador -->
+                <div class="actions-panel" id="playerActions">
+                    <button class="action-btn attackButton" id="btnAttack">
+                        <span class="btn-icon-symbol">⚔️</span>
+                        <span class="btn-label">Atacar</span>
+                    </button>
+                    <button class="action-btn specialButton" id="btnSpecial">
+                        <span class="btn-icon-symbol">✨</span>
+                        <span class="btn-label" id="specialSkillName">Golpe Pesado</span>
+                    </button>
+                    <button class="action-btn healButton" id="btnHeal">
+                        <span class="btn-icon-symbol">🧪</span>
+                        <span class="btn-label">Curar (+35 HP)</span>
+                    </button>
+                    <button class="action-btn defendButton" id="btnDefend">
+                        <span class="btn-icon-symbol">🛡️</span>
+                        <span class="btn-label">Defender</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Divisor VS Central -->
+            <div class="vs-divider">
+                <div class="vs-circle">VS</div>
+                <div class="round-counter" id="roundCounter">Turno 1</div>
+            </div>
+
+            <!-- Card do Monstro / Adversário -->
+            <article id="monster" class="fighter-card monster-card">
+                <div class="card-glow"></div>
+                <div class="floating-damage-container" id="monsterDamageContainer"></div>
+
+                <div class="avatar-wrapper">
+                    <img id="monsterAvatar" src="assets/images/big_monster.jpg" alt="Avatar do Monstro" class="fighter-avatar">
+                    <span class="class-tag danger-tag" id="monsterClassTag">Chefe</span>
+                </div>
+
+                <div class="fighter-info">
+                    <div class="name-status">
+                        <strong class="name" id="monsterName">Big Monster</strong>
+                        <span class="hp-numeric" id="monsterHpText">90 / 90 HP</span>
+                    </div>
+
+                    <div class="lifebar-wrapper">
+                        <div class="lifebar">
+                            <div class="bar monster-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="attributes-grid">
+                        <div class="attr-pill" title="Poder de Ataque">
+                            <span class="attr-icon">⚔️</span>
+                            <span class="attr-val" id="monsterAtk">9 Atk</span>
+                        </div>
+                        <div class="attr-pill" title="Defesa / Absorção">
+                            <span class="attr-icon">🛡️</span>
+                            <span class="attr-val" id="monsterDef">10 Def</span>
+                        </div>
+                        <div class="attr-pill" title="Comportamento da IA">
+                            <span class="attr-icon">🧠</span>
+                            <span class="attr-val" id="monsterBehavior">Agressivo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status de Ação do Inimigo -->
+                <div class="enemy-status-box" id="enemyStatus">
+                    <span class="enemy-status-icon">⏳</span>
+                    <span class="enemy-status-text">Aguardando sua jogada...</span>
+                </div>
+            </article>
+        </section>
+
+        <!-- Log de Batalha Estilizado -->
+        <section class="log-section">
+            <div class="log-header">
+                <div class="log-title">
+                    <span class="log-icon">📜</span>
+                    <h3>Registro da Batalha</h3>
+                </div>
+                <button class="clear-log-btn" id="clearLogBtn" title="Limpar Histórico">Limpar Histórico</button>
+            </div>
+            <div class="log-wrapper">
+                <ul class="log" id="combatLog">
+                    <!-- Mensagens do combate serão inseridas aqui dinamicamente -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Vitória ou Derrota -->
+    <div class="modal-backdrop" id="gameModal">
+        <div class="modal-card">
+            <div class="modal-icon" id="modalIcon">🏆</div>
+            <h2 class="modal-title" id="modalTitle">Vitória Épica!</h2>
+            <p class="modal-desc" id="modalDesc">Você derrotou a criatura e triunfou na Arena dos Campeões!</p>
+            <div class="modal-stats" id="modalStats">
+                <!-- Estatísticas da batalha -->
+            </div>
+            <div class="modal-actions">
+                <button id="modalPlayAgainBtn" class="btn-primary">Jogar Novamente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts do Jogo -->
+    <script src="assets/js/functions.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

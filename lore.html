@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crônicas da Arena - Lores e Bestiário dos Personagens</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/lore.css">
+</head>
+
+<body class="lore-page">
+    <div class="background-overlay"></div>
+
+    <header class="game-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <span class="game-badge">ARQUIVOS ANCESTRAIS</span>
+                <h1 class="game-title">Compêndio & Bestiário</h1>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="btn-secondary" title="Retornar para o Combate">
+                    ⚔️ Voltar para a Arena
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="lore-container">
+        <!-- Banner Introdutório -->
+        <section class="lore-hero">
+            <h2 class="lore-heading">As Crônicas de Aethelgard</h2>
+            <p class="lore-subheading">
+                Conheça a história, segredos e táticas de combate de cada campeão, criatura sombria e chefão colossal que trilha o solo sagrado da Arena dos Campeões.
+            </p>
+            
+            <!-- Abas de Navegação -->
+            <div class="lore-tabs">
+                <button class="lore-tab-btn active" data-category="heroes">
+                    🛡️ Heróis da Aliança (6)
+                </button>
+                <button class="lore-tab-btn" data-category="monsters">
+                    👹 Bestiário de Monstros (6)
+                </button>
+                <button class="lore-tab-btn" data-category="bosses">
+                    👑 Chefes Supremos (2)
+                </button>
+            </div>
+        </section>
+
+        <!-- Seção: HERÓIS DA ALIANÇA -->
+        <section class="lore-section active" id="sec-heroes">
+            <div class="lore-grid">
+                <!-- 1. Guerreiro -->
+                <article class="lore-card theme-knight">
+                    <div class="lore-card-header">
+                        <img src="assets/images/knight.jpg" alt="Cavaleiro Paladino" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag knight">Tanque / Dano Físico</span>
+                            <h3 class="lore-char-name">Viktor, o Paladino Rúnico</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Forjado nas chamas das guerras setentrionais, Viktor jurou proteger os inocentes com sua lendária lâmina gravada com runas celestes. Carrega a armadura de aço estelar que absorve os mais brutais impactos, equilibrando ataques firmes com disciplina inquebrável.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 115 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 14 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 9 Def</div>
+                            <div class="lore-stat"><strong>Poções:</strong> 2</div>
+                        </div>
+                        <div class="lore-skill-box">
+                            <span class="skill-label">✨ Habilidade Especial:</span>
+                            <strong>Golpe Demolidor</strong> - Investe com peso titânico causando 185% de dano esmagador.
+                        </div>
+                        <a href="index.html?hero=knight" class="btn-play-character">⚔️ Jogar com o Guerreiro</a>
+                    </div>
+                </article>
+
+                <!-- 2. Mago Arcano -->
+                <article class="lore-card theme-sorcerer">
+                    <div class="lore-card-header">
+                        <img src="assets/images/sorcerer.jpg" alt="Mago Arcano" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag sorcerer">Alto Dano Mágico</span>
+                            <h3 class="lore-char-name">Viktor, o Mago do Caos</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Após décadas decifrando tomos proibidos nas bibliotecas flutuantes de Kirin-Drak, ele dominou os fluxos de éter violeta. Embora sua constituição física seja vulnerável, sua mente dispara rajadas mágicas que desintegram até mesmo as cascas rochosas dos golens.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 85 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 19 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 4 Def</div>
+                            <div class="lore-stat"><strong>Poções:</strong> 3</div>
+                        </div>
+                        <div class="lore-skill-box">
+                            <span class="skill-label">✨ Habilidade Especial:</span>
+                            <strong>Explosão Arcana</strong> - Desencadeia um feixe de pura energia cósmica com 220% de dano.
+                        </div>
+                        <a href="index.html?hero=sorcerer" class="btn-play-character">⚔️ Jogar com o Mago</a>
+                    </div>
+                </article>
+
+                <!-- 3. Arqueira -->
+                <article class="lore-card theme-archer">
+                    <div class="lore-card-header">
+                        <img src="assets/images/archer.jpg" alt="Arqueira Caçadora" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag archer">Crítico & Precisão</span>
+                            <h3 class="lore-char-name">Lyra, a Sentinela da Floresta</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Criada sob a copa das árvores sagradas da Floresta dos Murmúrios, Lyra possui reflexos inumanos. Seu arco entalhado em madeira ancestral nunca falha; ela alveja pontos vitais de distâncias imensas com 32% de chance de acertos críticos letais.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 90 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 16 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 6 Def</div>
+                            <div class="lore-stat"><strong>Crítico:</strong> 32%</div>
+                        </div>
+                        <div class="lore-skill-box">
+                            <span class="skill-label">✨ Habilidade Especial:</span>
+                            <strong>Tiro Perfurante</strong> - Disparo cinético encantado que ignora armadura causando 230% de dano.
+                        </div>
+                        <a href="index.html?hero=archer" class="btn-play-character">⚔️ Jogar com a Arqueira</a>
+                    </div>
+                </article>
+
+                <!-- 4. Ladino -->
+                <article class="lore-card theme-rogue">
+                    <div class="lore-card-header">
+                        <img src="assets/images/rogue.jpg" alt="Ladino Assassino" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag rogue">Evasão & Veneno</span>
+                            <h3 class="lore-char-name">Sombra, o Lâmina Espectral</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Um renegado que habita o véu entre o mundo físico e a névoa das sombras. Com 26% de taxa de esquiva natural, Sombra faz os golpes adversários cortarem apenas o ar, enquanto suas adagas embebidas em veneno de basilisco dilaceram o inimigo pelas costas.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 80 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 18 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 5 Def</div>
+                            <div class="lore-stat"><strong>Esquiva:</strong> 26%</div>
+                        </div>
+                        <div class="lore-skill-box">
+                            <span class="skill-label">✨ Habilidade Especial:</span>
+                            <strong>Golpe Venenoso</strong> - Ataque furtivo fatal desferido pelas costas com 210% de dano.
+                        </div>
+                        <a href="index.html?hero=rogue" class="btn-play-character">⚔️ Jogar com o Ladino</a>
+                    </div>
+                </article>
+
+                <!-- 5. Clérigo -->
+                <article class="lore-card theme-cleric">
+                    <div class="lore-card-header">
+                        <img src="assets/images/cleric.jpg" alt="Clérigo Sagrado" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag cleric">Sustentação & Luz</span>
+                            <h3 class="lore-char-name">Ildor, o Guardião Solar</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Portador da centelha sagrada da Ordem da Alvorada, Ildor é o pilar inabalável de sobrevivência. Empunhando seu martelo abençoado e grimório divino, ele castiga as forças profanas enquanto canaliza orações que restauram a própria vida no fervor da luta.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 105 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 13 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 8 Def</div>
+                            <div class="lore-stat"><strong>Poções:</strong> 4</div>
+                        </div>
+                        <div class="lore-skill-box">
+                            <span class="skill-label">✨ Habilidade Especial:</span>
+                            <strong>Punição Sagrada</strong> - Inflige 170% de dano radiante e regenera instantaneamente +25 de HP.
+                        </div>
+                        <a href="index.html?hero=cleric" class="btn-play-character">⚔️ Jogar com o Clérigo</a>
+                    </div>
+                </article>
+
+                <!-- 6. Bárbaro -->
+                <article class="lore-card theme-berserker">
+                    <div class="lore-card-header">
+                        <img src="assets/images/berserker.jpg" alt="Bárbaro Berserker" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag berserker">Risco & Recompensa</span>
+                            <h3 class="lore-char-name">Krag, o Devorador de Batalhas</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Descendente dos clãs nômades das montanhas gélidas, Krag não conhece o medo ou escudos. Ele se alimenta de sua própria dor: quanto mais ferido está seu corpo, mais selvagens e devastadores se tornam seus machados de guerra (ganha até +12 de ataque em baixa vida).
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 130 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 15 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 5 Def</div>
+                            <div class="lore-stat"><strong>Passiva:</strong> Fúria Crescente</div>
+                        </div>
+                        <div class="lore-skill-box">
+                            <span class="skill-label">✨ Habilidade Especial:</span>
+                            <strong>Fúria Sanguinária</strong> - Golpe violento de machados duplos com 240% de destruição.
+                        </div>
+                        <a href="index.html?hero=berserker" class="btn-play-character">⚔️ Jogar com o Bárbaro</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção: BESTIÁRIO DE MONSTROS -->
+        <section class="lore-section" id="sec-monsters">
+            <div class="lore-grid">
+                <!-- 1. Goblin Ladrão -->
+                <article class="lore-card theme-goblin">
+                    <div class="lore-card-header">
+                        <img src="assets/images/little_monster.jpg" alt="Goblin Ladrão" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag little-monster">Ladino Ágil</span>
+                            <h3 class="lore-char-name">Goblin Ladrão</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Criaturas pestilentas que habitam as catacumbas sob a arena. Conhecidos por seus passos silenciosos e adagas envenenadas, eles preferem atacar em momentos de distração e esquivar de contra-ataques pesados.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 55 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 9 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 4 Def</div>
+                            <div class="lore-stat"><strong>Estilo:</strong> Esquivo</div>
+                        </div>
+                        <a href="index.html?monster=littleMonster" class="btn-play-character">👹 Batalhar contra este Inimigo</a>
+                    </div>
+                </article>
+
+                <!-- 2. Esqueleto Arqueiro -->
+                <article class="lore-card theme-skeleton">
+                    <div class="lore-card-header">
+                        <img src="assets/images/skeleton_archer.jpg" alt="Esqueleto Arqueiro" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag skeleton-archer">Morto-Vivo Retaguarda</span>
+                            <h3 class="lore-char-name">Esqueleto Arqueiro</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Restos mortais de antigos soldados reanimados por magia necromântica profana. Posicionado na retaguarda, dispara flechas ósseas contínuas que furam cotas de malha, exigindo eliminação rápida antes que sangre o herói.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 65 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 12 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 3 Def</div>
+                            <div class="lore-stat"><strong>Estilo:</strong> À Distância</div>
+                        </div>
+                        <a href="index.html?monster=skeletonArcher" class="btn-play-character">👹 Batalhar contra este Inimigo</a>
+                    </div>
+                </article>
+
+                <!-- 3. Xamã Goblin -->
+                <article class="lore-card theme-shaman">
+                    <div class="lore-card-header">
+                        <img src="assets/images/goblin_shaman.jpg" alt="Xamã Goblin" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag goblin-shaman">Conjurador Suporte</span>
+                            <h3 class="lore-char-name">Xamã Goblin</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            O líder espiritual dos clãs de goblins. Carrega um cajado cerimonial adornado com crânios e penas, entoando cânticos profanos capazes de curar a si próprio durante o combate e lançar maldições venenosas.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 75 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 11 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 5 Def</div>
+                            <div class="lore-stat"><strong>Habilidade:</strong> Autocura Arcana</div>
+                        </div>
+                        <a href="index.html?monster=goblinShaman" class="btn-play-character">👹 Batalhar contra este Inimigo</a>
+                    </div>
+                </article>
+
+                <!-- 4. Lobo Selvagem -->
+                <article class="lore-card theme-wolf">
+                    <div class="lore-card-header">
+                        <img src="assets/images/wild_wolf.jpg" alt="Lobo Selvagem" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag wild-wolf">Fera Sombria</span>
+                            <h3 class="lore-char-name">Lobo da Noite</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Predador alfa corrompido pela névoa da arena. Com presas gotejando sangue e olhos incandescentes, ataca em surtos de velocidade vertiginosa, arrancando pedaços com mordidas rasgantes difíceis de bloquear.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 70 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 14 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 4 Def</div>
+                            <div class="lore-stat"><strong>Estilo:</strong> Agressivo</div>
+                        </div>
+                        <a href="index.html?monster=wildWolf" class="btn-play-character">👹 Batalhar contra este Inimigo</a>
+                    </div>
+                </article>
+
+                <!-- 5. Mímico -->
+                <article class="lore-card theme-mimic">
+                    <div class="lore-card-header">
+                        <img src="assets/images/mimic.jpg" alt="Mímico Baú Falso" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag mimic">Armadilha Mortal</span>
+                            <h3 class="lore-char-name">Mímico Devorador</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Disfarçado astutamente como um baú de tesouro cravejado de moedas douradas, esse monstro aberrante revela dentes pontiagudos e língua chicoteante quando o aventureiro se aproxima, aplicando mordidas esmagadoras.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 90 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 15 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 8 Def</div>
+                            <div class="lore-stat"><strong>Estilo:</strong> Emboscada</div>
+                        </div>
+                        <a href="index.html?monster=mimic" class="btn-play-character">👹 Batalhar contra este Inimigo</a>
+                    </div>
+                </article>
+
+                <!-- 6. Golem de Lava -->
+                <article class="lore-card theme-golem">
+                    <div class="lore-card-header">
+                        <img src="assets/images/big_monster.jpg" alt="Golem de Lava" class="lore-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag big-monster">Blindagem de Rocha</span>
+                            <h3 class="lore-char-name">Golem de Lava</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Uma montanha viva de magma resfriado e basalto vulcânico. Sua armadura impenetrável reduz a maioria dos golpes físicos a meras fagulhas, enquanto seus punhos incandescentes causam impactos sísmicos.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 130 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 13 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 10 Def</div>
+                            <div class="lore-stat"><strong>Estilo:</strong> Tanque Incandescente</div>
+                        </div>
+                        <a href="index.html?monster=bigMonster" class="btn-play-character">👹 Batalhar contra este Inimigo</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção: CHEFES SUPREMOS (BOSSES) -->
+        <section class="lore-section" id="sec-bosses">
+            <div class="lore-grid">
+                <!-- 1. Rei dos Goblins -->
+                <article class="lore-card boss-card theme-boss-goblin">
+                    <div class="boss-badge-ribbon">👑 CHEFÃO DA HORDA</div>
+                    <div class="lore-card-header">
+                        <img src="assets/images/goblin_king.jpg" alt="Rei dos Goblins" class="lore-avatar boss-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag boss-badge">Chefe da Fase 1</span>
+                            <h3 class="lore-char-name">Grob'Zal, o Rei dos Goblins</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            O tirânico monarca dos subterrâneos, sentado em um trono de ossos e tesouros saqueados de heróis caídos. Não luta com honra: joga bombas de fumaça sufocantes, ordena investidas coordenadas de seus asseclas e, na segunda fase do combate, empunha cetros flamejantes em fúria desenfreada.
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 180 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 16 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 9 Def</div>
+                            <div class="lore-stat"><strong>Mecânica:</strong> 2 Fases & Fumaça</div>
+                        </div>
+                        <div class="lore-skill-box boss-skill">
+                            <span class="skill-label">👑 Habilidade de Chefe:</span>
+                            <strong>Bomba de Fumaça & Emboscada</strong> - Ofusca a visão do jogador e desfere dano crítico de 210%.
+                        </div>
+                        <a href="index.html?monster=goblinKing" class="btn-play-character boss-btn">👑 Desafiar o Rei dos Goblins</a>
+                    </div>
+                </article>
+
+                <!-- 2. Colosso Ancestral -->
+                <article class="lore-card boss-card theme-boss-colossus">
+                    <div class="boss-badge-ribbon">👑 TITÃ ANCESTRAL</div>
+                    <div class="lore-card-header">
+                        <img src="assets/images/ancient_colossus.jpg" alt="Colosso Ancestral" class="lore-avatar boss-avatar">
+                        <div class="lore-title-group">
+                            <span class="class-tag boss-badge">Chefe Supremo</span>
+                            <h3 class="lore-char-name">O Colosso Corrompido</h3>
+                        </div>
+                    </div>
+                    <div class="lore-body">
+                        <p class="lore-text">
+                            Despertado do sono milenar nas entranhas da terra por magias profanas. Este ser gigantesco de granito e runas sombrias possui 240 de HP e defesas monstruosas. Ele telegrafa ataques mortais de impacto no chão: se o herói não assumir a <strong>Postura Defensiva</strong> a tempo, o teto da arena desaba causando aniquilação imediata!
+                        </p>
+                        <div class="lore-stats-box">
+                            <div class="lore-stat"><strong>Vida:</strong> 240 HP</div>
+                            <div class="lore-stat"><strong>Ataque:</strong> 19 Atk</div>
+                            <div class="lore-stat"><strong>Defesa:</strong> 14 Def</div>
+                            <div class="lore-stat"><strong>Mecânica:</strong> Terremoto Telegrafado</div>
+                        </div>
+                        <div class="lore-skill-box boss-skill">
+                            <span class="skill-label">👑 Habilidade de Chefe:</span>
+                            <strong>Cataclismo de Rocha</strong> - Impacto sísmico devastador de 260% de dano. Exige uso de DEFESA!
+                        </div>
+                        <a href="index.html?monster=ancientColossus" class="btn-play-character boss-btn">👑 Enfrentar o Colosso Ancestral</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Script simples de troca de abas na página de Lore
+        document.querySelectorAll('.lore-tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lore-tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.lore-section').forEach(s => s.classList.remove('active'));
+
+                btn.classList.add('active');
+                const target = document.getElementById(`sec-${btn.dataset.category}`);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

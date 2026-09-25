@@ -1,0 +1,301 @@
+/* ============================================================
+   LORE & BESTIÁRIO - ESTILOS VISUAIS DAS CRÔNICAS DE AETHELGARD
+   ============================================================ */
+
+.lore-page {
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.lore-container {
+    position: relative;
+    z-index: 5;
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Banner da Lore */
+.lore-hero {
+    text-align: center;
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-lg);
+    padding: 36px 24px 28px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.lore-heading {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 30%, #e0a96d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 15px rgba(224, 169, 109, 0.4);
+}
+
+.lore-subheading {
+    max-width: 760px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Abas de Navegação */
+.lore-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.lore-tab-btn {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(224, 169, 109, 0.3);
+    color: var(--text-secondary);
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.lore-tab-btn:hover {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: var(--border-gold-bright);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.lore-tab-btn.active {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    border-color: #f59e0b;
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Seções de Lore */
+.lore-section {
+    display: none;
+    animation: fadeInLore 0.4s ease;
+}
+
+.lore-section.active {
+    display: block;
+}
+
+@keyframes fadeInLore {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grid de Cards */
+.lore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+}
+
+/* Card Individual */
+.lore-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.lore-card:hover {
+    border-color: rgba(224, 169, 109, 0.7);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 25px rgba(224, 169, 109, 0.25);
+    transform: translateY(-4px);
+}
+
+.lore-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.lore-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-gold-bright);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    flex-shrink: 0;
+}
+
+.lore-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lore-char-name {
+    font-family: var(--font-heading);
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.lore-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+}
+
+.lore-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Box de Atributos */
+.lore-stats-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lore-stat {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.lore-stat strong {
+    color: #e2e8f0;
+}
+
+/* Box de Habilidade */
+.lore-skill-box {
+    background: rgba(192, 132, 252, 0.08);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    color: #e2e8f0;
+    line-height: 1.4;
+}
+
+.skill-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+/* Botão de Ação do Card */
+.btn-play-character {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: rgba(224, 169, 109, 0.15);
+    border: 1px solid rgba(224, 169, 109, 0.4);
+    color: #f8fafc;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-top: 6px;
+    transition: var(--transition);
+}
+
+.btn-play-character:hover {
+    background: rgba(224, 169, 109, 0.35);
+    border-color: var(--border-gold-bright);
+    box-shadow: 0 0 15px rgba(224, 169, 109, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Estilos de Boss */
+.boss-card {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, rgba(26, 16, 22, 0.9), rgba(15, 10, 18, 0.95));
+}
+
+.boss-card:hover {
+    border-color: #f87171;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(239, 68, 68, 0.35);
+}
+
+.boss-avatar {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5) !important;
+}
+
+.boss-badge-ribbon {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.boss-skill {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.boss-skill .skill-label {
+    color: #f87171;
+}
+
+.boss-btn {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(185, 28, 28, 0.3));
+    border-color: #ef4444;
+}
+
+.boss-btn:hover {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+@media (max-width: 768px) {
+    .lore-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lore-heading {
+        font-size: 1.7rem;
+    }
+}
