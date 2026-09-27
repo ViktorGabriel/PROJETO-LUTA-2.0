@@ -171,6 +171,86 @@ document.addEventListener('DOMContentLoaded', () => {
         log.clear();
     });
 
+    // ============================================================
+    // CONTROLES DO MODAL DE ATRIBUTOS (PROGRESSÃO DE NÍVEL)
+    // ============================================================
+    const attributeModal = document.getElementById('attributeModal');
+    const btnOpenAttributes = document.getElementById('btnOpenAttributes');
+    const btnCloseAttributes = document.getElementById('btnCloseAttributes');
+    const btnResetAttributes = document.getElementById('btnResetAttributes');
+    const attrModalHeroName = document.getElementById('attrModalHeroName');
+    const attrPointsAvailable = document.getElementById('attrPointsAvailable');
+
+    function renderAttributeModal() {
+        if (!currentHero) return;
+        const prog = progressionSystem.getHeroProgress(currentHero.characterClass);
+
+        if (attrModalHeroName) {
+            attrModalHeroName.innerText = `Atributos: ${currentHero.name} (${currentHero.classTag})`;
+        }
+        if (attrPointsAvailable) {
+            attrPointsAvailable.innerText = prog.unspentPoints;
+        }
+
+        const valStr = document.getElementById('valStr');
+        const valDef = document.getElementById('valDef');
+        const valVit = document.getElementById('valVit');
+        const valAgi = document.getElementById('valAgi');
+
+        if (valStr) valStr.innerText = `+${prog.attributes.str}`;
+        if (valDef) valDef.innerText = `+${prog.attributes.def}`;
+        if (valVit) valVit.innerText = `+${prog.attributes.vit * 8} HP (${prog.attributes.vit})`;
+        if (valAgi) valAgi.innerText = `+${prog.attributes.agi * 2}% (${prog.attributes.agi})`;
+
+        // Habilita ou desabilita botões de adição
+        const canAdd = prog.unspentPoints > 0;
+        document.querySelectorAll('.btn-add-stat').forEach(btn => {
+            btn.disabled = !canAdd;
+        });
+    }
+
+    btnOpenAttributes?.addEventListener('click', () => {
+        renderAttributeModal();
+        attributeModal?.classList.add('show');
+    });
+
+    btnCloseAttributes?.addEventListener('click', () => {
+        attributeModal?.classList.remove('show');
+    });
+
+    attributeModal?.addEventListener('click', (e) => {
+        if (e.target === attributeModal) {
+            attributeModal.classList.remove('show');
+        }
+    });
+
+    document.querySelectorAll('.btn-add-stat').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const stat = btn.dataset.stat;
+            if (currentHero && stat) {
+                const ok = progressionSystem.allocatePoint(currentHero.characterClass, stat);
+                if (ok) {
+                    progressionSystem.applyToHero(currentHero);
+                    soundFx.playDefend(); // som suave de alocação
+                    renderAttributeModal();
+                    stage.update();
+                }
+            }
+        });
+    });
+
+    btnResetAttributes?.addEventListener('click', () => {
+        if (currentHero) {
+            progressionSystem.resetPoints(currentHero.characterClass);
+            // Re-instancia o herói para restaurar atributos base e reaplicar
+            currentHero = getSelectedHero();
+            stage.fighter1 = currentHero;
+            soundFx.playHeal();
+            renderAttributeModal();
+            stage.update();
+        }
+    });
+
     // Início imediato da primeira partida
     startNewBattle();
 });

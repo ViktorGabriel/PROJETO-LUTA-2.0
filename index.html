@@ -144,6 +144,7 @@
             <article id="char" class="fighter-card hero-card">
                 <div class="card-glow"></div>
                 <div class="floating-damage-container" id="charDamageContainer"></div>
+                <div class="status-effects-bar" id="charStatusBar" aria-label="Efeitos de Estado Ativos"></div>
                 
                 <div class="avatar-wrapper">
                     <img id="charAvatar" src="assets/images/knight.jpg" alt="Avatar do Herói" class="fighter-avatar">
@@ -159,6 +160,21 @@
                     <div class="lifebar-wrapper">
                         <div class="lifebar">
                             <div class="bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Barra de Progressão de Nível & XP do Herói -->
+                    <div class="hero-progression-panel">
+                        <div class="level-indicator-row">
+                            <span class="level-badge" id="heroLevelBadge">⭐ Nível 1</span>
+                            <button type="button" class="btn-attributes" id="btnOpenAttributes" title="Distribuir Pontos de Atributos">
+                                ⚡ Atributos
+                                <span class="points-badge" id="pointsBadge" style="display:none">+0 pts</span>
+                            </button>
+                        </div>
+                        <div class="xp-bar-wrapper" title="Progresso para o próximo nível">
+                            <div class="xp-bar" id="heroXpBar" style="width: 0%;"></div>
+                            <span class="xp-bar-text" id="heroXpText">0 / 100 XP</span>
                         </div>
                     </div>
 
@@ -209,6 +225,7 @@
             <article id="monster" class="fighter-card monster-card">
                 <div class="card-glow"></div>
                 <div class="floating-damage-container" id="monsterDamageContainer"></div>
+                <div class="status-effects-bar" id="monsterStatusBar" aria-label="Efeitos de Estado do Inimigo"></div>
 
                 <div class="avatar-wrapper">
                     <img id="monsterAvatar" src="assets/images/big_monster.jpg" alt="Avatar do Monstro" class="fighter-avatar">
@@ -279,6 +296,89 @@
             </div>
             <div class="modal-actions">
                 <button id="modalPlayAgainBtn" class="btn-primary">Jogar Novamente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Distribuição de Atributos do Herói -->
+    <div class="modal-backdrop" id="attributeModal">
+        <div class="modal-card attribute-modal-card">
+            <div class="attr-modal-header">
+                <div class="modal-icon">⚡</div>
+                <h2 class="modal-title" id="attrModalHeroName">Aprimorar Atributos</h2>
+                <p class="modal-desc">
+                    Distribua os pontos recebidos ao subir de nível para moldar os pontos fortes do seu herói.
+                </p>
+                <div class="points-available-box">
+                    Pontos Disponíveis: <strong id="attrPointsAvailable">0</strong>
+                </div>
+            </div>
+
+            <div class="attributes-alloc-list">
+                <div class="attr-alloc-item">
+                    <div class="attr-alloc-info">
+                        <span class="attr-alloc-icon">⚔️</span>
+                        <div>
+                            <strong>Força (Ataque Físico)</strong>
+                            <small>+1 de Dano por ponto investido</small>
+                        </div>
+                    </div>
+                    <div class="attr-alloc-controls">
+                        <span class="attr-current-val" id="valStr">+0</span>
+                        <button type="button" class="btn-add-stat" data-stat="str" title="Adicionar Ponto de Força">+</button>
+                    </div>
+                </div>
+
+                <div class="attr-alloc-item">
+                    <div class="attr-alloc-info">
+                        <span class="attr-alloc-icon">🛡️</span>
+                        <div>
+                            <strong>Defesa (Armadura)</strong>
+                            <small>+1 de Redução de Dano por ponto</small>
+                        </div>
+                    </div>
+                    <div class="attr-alloc-controls">
+                        <span class="attr-current-val" id="valDef">+0</span>
+                        <button type="button" class="btn-add-stat" data-stat="def" title="Adicionar Ponto de Defesa">+</button>
+                    </div>
+                </div>
+
+                <div class="attr-alloc-item">
+                    <div class="attr-alloc-info">
+                        <span class="attr-alloc-icon">💚</span>
+                        <div>
+                            <strong>Vitalidade (Vida Máxima)</strong>
+                            <small>+8 de HP Máximo por ponto</small>
+                        </div>
+                    </div>
+                    <div class="attr-alloc-controls">
+                        <span class="attr-current-val" id="valVit">+0</span>
+                        <button type="button" class="btn-add-stat" data-stat="vit" title="Adicionar Ponto de Vitalidade">+</button>
+                    </div>
+                </div>
+
+                <div class="attr-alloc-item">
+                    <div class="attr-alloc-info">
+                        <span class="attr-alloc-icon">🎯</span>
+                        <div>
+                            <strong>Agilidade (Crítico & Esquiva)</strong>
+                            <small>+2% de Chance de Crítico e +2% de Esquiva</small>
+                        </div>
+                    </div>
+                    <div class="attr-alloc-controls">
+                        <span class="attr-current-val" id="valAgi">+0</span>
+                        <button type="button" class="btn-add-stat" data-stat="agi" title="Adicionar Ponto de Agilidade">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer-actions">
+                <button type="button" class="btn-secondary" id="btnResetAttributes" title="Devolve todos os pontos já distribuídos deste herói">
+                    🔄 Redistribuir
+                </button>
+                <button type="button" class="btn-primary" id="btnCloseAttributes">
+                    Confirmar & Fechar
+                </button>
             </div>
         </div>
     </div>

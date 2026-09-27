@@ -34,6 +34,13 @@ A aplicação conta ainda com um compêndio narrativo completo (*Bestiário & Lo
   - 2 Chefões Supremos com mecânicas especiais: **Rei dos Goblins** (bombas de fumaça e fúria) e **Colosso Ancestral** (ataques sísmicos telegrafados com aviso prévio).
 - **Áudio Sintetizado 100% Nativo:** Efeitos de corte de lâmina, flechas, magias elementais, rugidos, alertas de boss, poções e fanfarras de vitória sintetizados em tempo real via osciladores senoidais e dente de serra. Zero dependência de rede.
 - **Feedback Visual Instantâneo:** Indicadores flutuantes de dano e cura (*Floating Numbers*), tremor de câmera (*Screenshake*), barras de HP interpoladas dinamicamente e registro em tempo real em log cronológico estilizado.
+- **Sistema de Progressão & Distribuição de Atributos:** Ganho de XP dinâmico escalonado por oponente (45 a 320 XP), curva exponencial de níveis, fanfarra sonora de level-up e modal interativo para distribuição de pontos em FOR (+Ataque), DEF (+Armadura), VIT (+Vida Máxima) e AGI (+Crítico e Esquiva), persistido no `localStorage`.
+- **Sistema Formal de Efeitos de Estado (Buffs & Debuffs Visuais):** Pílulas flutuantes com contadores de rodadas e auras visuais nos cards:
+  - 🧪 **Veneno (Poison):** Dano tóxico que ignora armadura por turno (Ladino, Goblin Ladrão, Xamã).
+  - 🔥 **Queimadura (Burn):** Dano de fogo contínuo e debilitação de 15% no poder de ataque do afetado (Mago, Golem de Lava, Rei Goblin).
+  - 🩸 **Sangramento (Bleed):** Dano de hemorragia e aumento de +15% na chance de sofrer acertos críticos (Bárbaro, Lobo da Noite, Arqueira).
+  - 🛡️ **Escudo Sagrado (Holy Shield):** Barreira luminosa que reduz 50% de todo dano direto recebido (Clérigo, Cavaleiro ao defender).
+  - ⚡ **Atordoamento (Stun):** Incapacitação total de agir durante a rodada (Golpe Demolidor do Cavaleiro, Cataclismo do Colosso Ancestral).
 - **Compêndio Narrativo Integrado (`lore.html`):** Enciclopédia com histórias, atributos e botão de *desafio direto* que transporta o jogador para a arena com o confronto pré-selecionado via `URLSearchParams`.
 
 ---

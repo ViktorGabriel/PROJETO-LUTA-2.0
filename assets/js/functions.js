@@ -287,11 +287,343 @@ const soundFx = {
             osc.start(now + item.t);
             osc.stop(now + item.t + item.d + 0.05);
         });
+    },
+
+    playLevelUp() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const notes = [
+            { f: 440, t: 0.0, d: 0.1 },
+            { f: 554.37, t: 0.09, d: 0.1 },
+            { f: 659.25, t: 0.18, d: 0.1 },
+            { f: 880, t: 0.28, d: 0.25 },
+            { f: 1108.73, t: 0.42, d: 0.4 }
+        ];
+
+        notes.forEach(item => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(item.f, now + item.t);
+            gain.gain.setValueAtTime(0.3, now + item.t);
+            gain.gain.exponentialRampToValueAtTime(0.005, now + item.t + item.d);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + item.t);
+            osc.stop(now + item.t + item.d + 0.05);
+        });
+    },
+
+    playPoison() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(140, now + 0.08);
+        osc.frequency.linearRampToValueAtTime(180, now + 0.16);
+        osc.frequency.linearRampToValueAtTime(100, now + 0.26);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.28);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.29);
+    },
+
+    playBurn() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(120, now + 0.22);
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.22);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.24);
+    },
+
+    playBleed() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.exponentialRampToValueAtTime(60, now + 0.25);
+
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.26);
+    },
+
+    playShield() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        [587.33, 880.00, 1174.66].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+            gain.gain.setValueAtTime(0.18, now + idx * 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.002, now + idx * 0.04 + 0.45);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.04);
+            osc.stop(now + idx * 0.04 + 0.46);
+        });
+    },
+
+    playStun() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(360, now);
+        osc.frequency.linearRampToValueAtTime(220, now + 0.09);
+        osc.frequency.linearRampToValueAtTime(310, now + 0.18);
+        osc.frequency.linearRampToValueAtTime(180, now + 0.28);
+
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.32);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.33);
     }
 };
 
 // ------------------------------------------------------------
-// 2. CLASSES DE PERSONAGENS (POO ES6 COMPLETO)
+// 2. DEFINIÇÕES DO SISTEMA FORMAL DE EFEITOS DE ESTADO
+// ------------------------------------------------------------
+const statusSystem = {
+    definitions: {
+        poison: {
+            id: 'poison',
+            name: 'Veneno',
+            icon: '🧪',
+            desc: 'Dano tóxico por rodada que ignora armadura.',
+            defaultPower: 7,
+            badgeClass: 'status-poison',
+            auraClass: 'card-poison-aura',
+            logType: 'monster'
+        },
+        burn: {
+            id: 'burn',
+            name: 'Queimadura',
+            icon: '🔥',
+            desc: 'Chamas abrasadoras causam dano por rodada e reduzem o ataque em 15%.',
+            defaultPower: 9,
+            badgeClass: 'status-burn',
+            auraClass: 'card-burn-aura',
+            logType: 'crit'
+        },
+        bleed: {
+            id: 'bleed',
+            name: 'Sangramento',
+            icon: '🩸',
+            desc: 'Hemorragia contínua por rodada e aumenta em +15% a chance de sofrer acertos críticos.',
+            defaultPower: 8,
+            badgeClass: 'status-bleed',
+            auraClass: 'card-bleed-aura',
+            logType: 'monster'
+        },
+        holyShield: {
+            id: 'holyShield',
+            name: 'Escudo Sagrado',
+            icon: '🛡️',
+            desc: 'Barreira divina de luz que reduz todo o dano direto sofrido em 50%.',
+            defaultPower: 0,
+            badgeClass: 'status-holyShield',
+            auraClass: 'card-shield-aura',
+            logType: 'heal'
+        },
+        stun: {
+            id: 'stun',
+            name: 'Atordoamento',
+            icon: '⚡',
+            desc: 'Incapacitado pelo impacto, perdendo a vez de agir nesta rodada.',
+            defaultPower: 0,
+            badgeClass: 'status-stun',
+            auraClass: 'card-stun-aura',
+            logType: 'system'
+        }
+    },
+
+    get(type) {
+        return this.definitions[type] || {
+            id: type,
+            name: type,
+            icon: '✨',
+            desc: 'Efeito ativo',
+            defaultPower: 5,
+            badgeClass: 'status-poison',
+            auraClass: '',
+            logType: 'system'
+        };
+    }
+};
+
+// ------------------------------------------------------------
+// 2. SISTEMA DE PROGRESSÃO E NÍVEIS (LOCALSTORAGE & STATS)
+// ------------------------------------------------------------
+const progressionSystem = {
+    STORAGE_KEY: 'rpg_hero_progression_v2',
+    data: {},
+
+    init() {
+        try {
+            const raw = localStorage.getItem(this.STORAGE_KEY);
+            if (raw) {
+                this.data = JSON.parse(raw);
+            }
+        } catch (e) {
+            console.warn('Falha ao ler progressão do localStorage', e);
+        }
+    },
+
+    save() {
+        try {
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.data));
+        } catch (e) {
+            console.warn('Falha ao salvar progressão no localStorage', e);
+        }
+    },
+
+    getHeroProgress(heroClass) {
+        if (!this.data[heroClass]) {
+            this.data[heroClass] = {
+                level: 1,
+                currentXp: 0,
+                unspentPoints: 0,
+                attributes: {
+                    str: 0, // +1 Ataque Físico
+                    def: 0, // +1 Defesa / Absorção
+                    vit: 0, // +8 HP Máximo
+                    agi: 0  // +2% Esquiva e +2% Crítico
+                }
+            };
+        }
+        return this.data[heroClass];
+    },
+
+    getXpForLevel(level) {
+        // Nível 1: 100 XP, Nível 2: 135 XP, Nível 3: 182 XP, etc.
+        return Math.round(100 * Math.pow(1.35, level - 1));
+    },
+
+    addXp(heroClass, amount) {
+        const prog = this.getHeroProgress(heroClass);
+        prog.currentXp += amount;
+        let leveledUp = false;
+        let levelsGained = 0;
+
+        let needed = this.getXpForLevel(prog.level);
+        while (prog.currentXp >= needed) {
+            prog.currentXp -= needed;
+            prog.level++;
+            prog.unspentPoints += 2; // +2 pontos de atributo por nível ganho!
+            leveledUp = true;
+            levelsGained++;
+            needed = this.getXpForLevel(prog.level);
+        }
+
+        this.save();
+        return {
+            leveledUp,
+            newLevel: prog.level,
+            unspentPoints: prog.unspentPoints,
+            levelsGained,
+            currentXp: prog.currentXp,
+            neededXp: needed
+        };
+    },
+
+    allocatePoint(heroClass, stat) {
+        const prog = this.getHeroProgress(heroClass);
+        if (prog.unspentPoints <= 0) return false;
+        if (prog.attributes[stat] === undefined) return false;
+
+        prog.attributes[stat]++;
+        prog.unspentPoints--;
+        this.save();
+        return true;
+    },
+
+    resetPoints(heroClass) {
+        const prog = this.getHeroProgress(heroClass);
+        const totalAllocated = prog.attributes.str + prog.attributes.def + prog.attributes.vit + prog.attributes.agi;
+        prog.unspentPoints += totalAllocated;
+        prog.attributes.str = 0;
+        prog.attributes.def = 0;
+        prog.attributes.vit = 0;
+        prog.attributes.agi = 0;
+        this.save();
+    },
+
+    applyToHero(hero) {
+        if (!hero || hero.type !== 'hero') return;
+        const prog = this.getHeroProgress(hero.characterClass);
+        hero.level = prog.level;
+        hero.currentXp = prog.currentXp;
+        hero.neededXp = this.getXpForLevel(prog.level);
+        hero.unspentPoints = prog.unspentPoints;
+
+        hero.bonusStr = prog.attributes.str;
+        hero.bonusDef = prog.attributes.def;
+        hero.bonusVit = prog.attributes.vit;
+        hero.bonusAgi = prog.attributes.agi;
+
+        hero.attack += hero.bonusStr;
+        hero.defense += hero.bonusDef;
+        const extraHp = hero.bonusVit * 8;
+        hero.maxLife += extraHp;
+        hero.life += extraHp;
+        hero.dodgeChance += (hero.bonusAgi * 0.02);
+        hero.critChance += (hero.bonusAgi * 0.02);
+    }
+};
+
+// Inicializa a persistência imediatamente
+progressionSystem.init();
+
+// ------------------------------------------------------------
+// 3. CLASSES DE PERSONAGENS (POO ES6 COMPLETO)
 // ------------------------------------------------------------
 
 class Character {
@@ -299,6 +631,15 @@ class Character {
         this.name = name;
         this.type = 'hero';
         this.characterClass = 'knight';
+        this.level = 1;
+        this.currentXp = 0;
+        this.neededXp = 100;
+        this.unspentPoints = 0;
+        this.bonusStr = 0;
+        this.bonusDef = 0;
+        this.bonusVit = 0;
+        this.bonusAgi = 0;
+        this.xpReward = 50; // Recompensa de XP para monstros
         this.life = 1;
         this.maxLife = 100;
         this.attack = 10;
@@ -496,6 +837,7 @@ class LittleMonster extends Character {
         super('Goblin Ladrão');
         this.type = 'monster';
         this.characterClass = 'little-monster';
+        this.xpReward = 45;
         this.life = 55;
         this.maxLife = 55;
         this.attack = 9;
@@ -523,6 +865,7 @@ class SkeletonArcher extends Character {
         super('Esqueleto Arqueiro');
         this.type = 'monster';
         this.characterClass = 'skeleton-archer';
+        this.xpReward = 55;
         this.life = 65;
         this.maxLife = 65;
         this.attack = 12;
@@ -550,6 +893,7 @@ class GoblinShaman extends Character {
         super('Xamã Goblin');
         this.type = 'monster';
         this.characterClass = 'goblin-shaman';
+        this.xpReward = 70;
         this.life = 75;
         this.maxLife = 75;
         this.attack = 11;
@@ -577,6 +921,7 @@ class WildWolf extends Character {
         super('Lobo da Noite');
         this.type = 'monster';
         this.characterClass = 'wild-wolf';
+        this.xpReward = 65;
         this.life = 70;
         this.maxLife = 70;
         this.attack = 14;
@@ -604,6 +949,7 @@ class MimicChest extends Character {
         super('Mímico Devorador');
         this.type = 'monster';
         this.characterClass = 'mimic';
+        this.xpReward = 85;
         this.life = 90;
         this.maxLife = 90;
         this.attack = 15;
@@ -631,6 +977,7 @@ class BigMonster extends Character {
         super('Golem de Lava');
         this.type = 'monster';
         this.characterClass = 'big-monster';
+        this.xpReward = 100;
         this.life = 130;
         this.maxLife = 130;
         this.attack = 13;
@@ -662,6 +1009,7 @@ class GoblinKing extends Character {
         this.characterClass = 'goblin-king';
         this.isBoss = true;
         this.bossPhase = 1;
+        this.xpReward = 220;
         this.life = 180;
         this.maxLife = 180;
         this.attack = 16;
@@ -691,6 +1039,7 @@ class AncientColossus extends Character {
         this.characterClass = 'ancient-colossus';
         this.isBoss = true;
         this.bossPhase = 1;
+        this.xpReward = 320;
         this.life = 240;
         this.maxLife = 240;
         this.attack = 19;
@@ -714,14 +1063,43 @@ class AncientColossus extends Character {
 }
 
 // ------------------------------------------------------------
-// 3. FACTORY FUNCTIONS (PADRÃO FUNCIONAL COMPATÍVEL)
+// 4. FACTORY FUNCTIONS (PADRÃO FUNCIONAL COMPATÍVEL)
 // ------------------------------------------------------------
-const createKnight = (name) => new Knight(name);
-const createSorcerer = (name) => new Sorcerer(name);
-const createArcher = (name) => new Archer(name);
-const createRogue = (name) => new Rogue(name);
-const createCleric = (name) => new Cleric(name);
-const createBerserker = (name) => new Berserker(name);
+const createKnight = (name = 'Viktor') => {
+    const hero = new Knight(name);
+    progressionSystem.applyToHero(hero);
+    return hero;
+};
+
+const createSorcerer = (name = 'Viktor') => {
+    const hero = new Sorcerer(name);
+    progressionSystem.applyToHero(hero);
+    return hero;
+};
+
+const createArcher = (name = 'Lyra') => {
+    const hero = new Archer(name);
+    progressionSystem.applyToHero(hero);
+    return hero;
+};
+
+const createRogue = (name = 'Sombra') => {
+    const hero = new Rogue(name);
+    progressionSystem.applyToHero(hero);
+    return hero;
+};
+
+const createCleric = (name = 'Ildor') => {
+    const hero = new Cleric(name);
+    progressionSystem.applyToHero(hero);
+    return hero;
+};
+
+const createBerserker = (name = 'Krag') => {
+    const hero = new Berserker(name);
+    progressionSystem.applyToHero(hero);
+    return hero;
+};
 
 const createLittleMonster = () => new LittleMonster();
 const createSkeletonArcher = () => new SkeletonArcher();
@@ -798,6 +1176,8 @@ const stage = {
     start(fighter1, fighter2, fighter1El, fighter2El) {
         this.fighter1 = fighter1;
         this.fighter2 = fighter2;
+        this.fighter1.statusEffects = [];
+        this.fighter2.statusEffects = [];
         this.fighter1El = fighter1El;
         this.fighter2El = fighter2El;
         this.arenaEl = document.getElementById('fightArena');
@@ -818,7 +1198,181 @@ const stage = {
         }
 
         this.bindEvents();
+        this.renderStatusBars();
         this.update();
+    },
+
+    applyStatus(target, statusType, duration = 3, power = null, source = null) {
+        if (!target || target.life <= 0 || this.isGameOver) return;
+        if (!target.statusEffects) target.statusEffects = [];
+
+        const meta = statusSystem.get(statusType);
+        const containerId = target === this.fighter1 ? 'charDamageContainer' : 'monsterDamageContainer';
+        const existing = target.statusEffects.find(s => s.type === statusType);
+
+        if (existing) {
+            existing.duration = Math.max(existing.duration, duration);
+            if (power) existing.power = Math.max(existing.power, power);
+            this.showFloatingNumber(containerId, `+${meta.name.toUpperCase()} (${existing.duration}T)`, `status-${statusType}`);
+            log.addMessage(`🔄 [${meta.name}] A duração do efeito em ${target.name} foi estendida para ${existing.duration} turnos!`, 'system');
+        } else {
+            const finalPower = power !== null ? power : meta.defaultPower;
+            target.statusEffects.push({
+                type: statusType,
+                duration: duration,
+                power: finalPower,
+                source: source ? source.name : ''
+            });
+
+            this.showFloatingNumber(containerId, `+${meta.name.toUpperCase()} (${duration}T)`, `status-${statusType}`);
+
+            if (statusType === 'poison') soundFx.playPoison();
+            else if (statusType === 'burn') soundFx.playBurn();
+            else if (statusType === 'bleed') soundFx.playBleed();
+            else if (statusType === 'holyShield') soundFx.playShield();
+            else if (statusType === 'stun') soundFx.playStun();
+
+            log.addMessage(`${meta.icon} [${meta.name}] ${target.name} foi afligido por ${meta.name} (${duration} rodada${duration > 1 ? 's' : ''})!`, meta.logType || 'system');
+        }
+
+        this.renderStatusBars();
+        this.update();
+    },
+
+    resolveTurnStartStatus(fighter, isHero) {
+        if (!fighter || fighter.life <= 0 || !fighter.statusEffects || fighter.statusEffects.length === 0) {
+            return { isStunned: false, died: false };
+        }
+
+        const containerId = isHero ? 'charDamageContainer' : 'monsterDamageContainer';
+        let isStunned = false;
+        const expiredStatuses = [];
+        const currentStatuses = [...fighter.statusEffects];
+
+        for (const status of currentStatuses) {
+            const meta = statusSystem.get(status.type);
+
+            if (status.type === 'poison') {
+                const dmg = status.power || 7;
+                fighter.life = Math.max(0, fighter.life - dmg);
+                this.showFloatingNumber(containerId, `-${dmg} VENENO`, 'status-poison');
+                soundFx.playPoison();
+                log.addMessage(`🧪 [Veneno] Toxinas queimam as entranhas de ${fighter.name}, causando ${dmg} de dano!`, 'monster');
+                if (isHero) this.stats.damageTaken += dmg;
+                else this.stats.damageDealt += dmg;
+            } else if (status.type === 'burn') {
+                const dmg = status.power || 9;
+                fighter.life = Math.max(0, fighter.life - dmg);
+                this.showFloatingNumber(containerId, `-${dmg} FOGO`, 'status-burn');
+                soundFx.playBurn();
+                log.addMessage(`🔥 [Queimadura] Chamas abrasam ${fighter.name}, causando ${dmg} de dano contínuo!`, 'crit');
+                if (isHero) this.stats.damageTaken += dmg;
+                else this.stats.damageDealt += dmg;
+            } else if (status.type === 'bleed') {
+                const dmg = status.power || 8;
+                fighter.life = Math.max(0, fighter.life - dmg);
+                this.showFloatingNumber(containerId, `-${dmg} SANGRANDO`, 'status-bleed');
+                soundFx.playBleed();
+                log.addMessage(`🩸 [Sangramento] Ferimentos abertos de ${fighter.name} jorram sangue (-${dmg} HP)!`, 'monster');
+                if (isHero) this.stats.damageTaken += dmg;
+                else this.stats.damageDealt += dmg;
+            } else if (status.type === 'stun') {
+                isStunned = true;
+                this.showFloatingNumber(containerId, `💫 ATORDOADO!`, 'status-stun');
+                soundFx.playStun();
+                log.addMessage(`💫 [Atordoamento] ${fighter.name} está atordoado e não consegue agir nesta rodada!`, 'system');
+            } else if (status.type === 'holyShield') {
+                log.addMessage(`🛡️ [Escudo Sagrado] A barreira divina protege ${fighter.name} (-50% de dano sofrido)!`, 'heal');
+            }
+
+            if (fighter.life <= 0) {
+                this.update();
+                this.renderStatusBars();
+                return { isStunned: false, died: true };
+            }
+
+            status.duration--;
+            if (status.duration <= 0) {
+                expiredStatuses.push(status.type);
+            }
+        }
+
+        fighter.statusEffects = fighter.statusEffects.filter(s => s.duration > 0);
+        expiredStatuses.forEach(type => {
+            const meta = statusSystem.get(type);
+            log.addMessage(`✨ O efeito de [${meta.name}] em ${fighter.name} dissipou-se.`, 'system');
+        });
+
+        this.renderStatusBars();
+        this.update();
+
+        return { isStunned, died: false };
+    },
+
+    renderStatusBars() {
+        const charBar = document.getElementById('charStatusBar');
+        const monsterBar = document.getElementById('monsterStatusBar');
+
+        if (charBar && this.fighter1) {
+            charBar.innerHTML = '';
+            if (this.fighter1.statusEffects && this.fighter1.statusEffects.length > 0) {
+                this.fighter1.statusEffects.forEach(effect => {
+                    const meta = statusSystem.get(effect.type);
+                    const pill = document.createElement('div');
+                    pill.className = `status-pill ${meta.badgeClass}`;
+                    pill.title = `${meta.name}: ${meta.desc} (${effect.duration} rodada${effect.duration > 1 ? 's' : ''} restante${effect.duration > 1 ? 's' : ''})`;
+                    pill.innerHTML = `
+                        <span class="status-icon">${meta.icon}</span>
+                        <span class="status-name">${meta.name}</span>
+                        <span class="status-duration-badge">${effect.duration}T</span>
+                    `;
+                    charBar.appendChild(pill);
+                });
+            }
+        }
+
+        if (monsterBar && this.fighter2) {
+            monsterBar.innerHTML = '';
+            if (this.fighter2.statusEffects && this.fighter2.statusEffects.length > 0) {
+                this.fighter2.statusEffects.forEach(effect => {
+                    const meta = statusSystem.get(effect.type);
+                    const pill = document.createElement('div');
+                    pill.className = `status-pill ${meta.badgeClass}`;
+                    pill.title = `${meta.name}: ${meta.desc} (${effect.duration} rodada${effect.duration > 1 ? 's' : ''} restante${effect.duration > 1 ? 's' : ''})`;
+                    pill.innerHTML = `
+                        <span class="status-icon">${meta.icon}</span>
+                        <span class="status-name">${meta.name}</span>
+                        <span class="status-duration-badge">${effect.duration}T</span>
+                    `;
+                    monsterBar.appendChild(pill);
+                });
+            }
+        }
+    },
+
+    beginPlayerTurn() {
+        if (this.isGameOver) return;
+
+        this.isPlayerTurn = true;
+        this.update();
+
+        const heroStatus = this.resolveTurnStartStatus(this.fighter1, true);
+        if (heroStatus.died) {
+            this.endBattle(false);
+            return;
+        }
+
+        if (heroStatus.isStunned) {
+            this.setControlsDisabled(true);
+            this.isPlayerTurn = false;
+            this.update();
+            setTimeout(() => {
+                this.monsterTurn();
+            }, 1200);
+            return;
+        }
+
+        this.setControlsDisabled(false);
     },
 
     bindEvents() {
@@ -891,6 +1445,28 @@ const stage = {
         if (f1AtkEl) f1AtkEl.innerText = `${heroDisplayAtk} Atk`;
         if (f1DefEl) f1DefEl.innerText = `${this.fighter1.defense} Def`;
         if (f1PotionsEl) f1PotionsEl.innerText = `${this.fighter1.potions} Poções`;
+
+        // Barra de Nível e XP do Herói
+        const heroLevelBadge = document.getElementById('heroLevelBadge');
+        const heroXpText = document.getElementById('heroXpText');
+        const heroXpBar = document.getElementById('heroXpBar');
+        const pointsBadge = document.getElementById('pointsBadge');
+
+        if (heroLevelBadge) heroLevelBadge.innerText = `⭐ Nível ${this.fighter1.level || 1}`;
+        if (heroXpText) heroXpText.innerText = `${this.fighter1.currentXp || 0} / ${this.fighter1.neededXp || 100} XP`;
+        if (heroXpBar) {
+            const xpPct = Math.min(100, Math.max(0, ((this.fighter1.currentXp || 0) / (this.fighter1.neededXp || 100)) * 100));
+            heroXpBar.style.width = `${xpPct}%`;
+        }
+
+        if (pointsBadge) {
+            if (this.fighter1.unspentPoints > 0) {
+                pointsBadge.style.display = 'inline-flex';
+                pointsBadge.innerText = `+${this.fighter1.unspentPoints} pts`;
+            } else {
+                pointsBadge.style.display = 'none';
+            }
+        }
 
         let f1Pct = Math.max(0, Math.min(100, (this.fighter1.life / this.fighter1.maxLife) * 100));
         if (f1BarEl) {
@@ -1006,6 +1582,25 @@ const stage = {
             this.fighter2El.classList.add('defending');
         } else {
             this.fighter2El.classList.remove('defending');
+        }
+
+        // Auras Visuais dos Efeitos de Estado Ativos
+        const allAuraClasses = ['card-poison-aura', 'card-burn-aura', 'card-bleed-aura', 'card-shield-aura', 'card-stun-aura'];
+        this.fighter1El.classList.remove(...allAuraClasses);
+        this.fighter2El.classList.remove(...allAuraClasses);
+
+        if (this.fighter1.statusEffects) {
+            this.fighter1.statusEffects.forEach(s => {
+                const meta = statusSystem.get(s.type);
+                if (meta && meta.auraClass) this.fighter1El.classList.add(meta.auraClass);
+            });
+        }
+
+        if (this.fighter2.statusEffects) {
+            this.fighter2.statusEffects.forEach(s => {
+                const meta = statusSystem.get(s.type);
+                if (meta && meta.auraClass) this.fighter2El.classList.add(meta.auraClass);
+            });
         }
     },
 
@@ -1127,7 +1722,10 @@ const stage = {
         }
 
         // Chance de Crítico
-        const critChance = attacker.critChance || 0.18;
+        let critChance = attacker.critChance || 0.18;
+        if (target.statusEffects && target.statusEffects.some(s => s.type === 'bleed')) {
+            critChance += 0.15; // Alvos sangrando são mais suscetíveis a cortes críticos!
+        }
         const isCrit = Math.random() < critChance;
         const critMultiplier = isCrit ? 1.75 : 1.0;
 
@@ -1140,6 +1738,11 @@ const stage = {
         }
 
         let attackPower = baseAttack * (0.85 + Math.random() * 0.35);
+
+        // Queimadura debilita a força física do atacante (-15% de poder)
+        if (attacker.statusEffects && attacker.statusEffects.some(s => s.type === 'burn')) {
+            attackPower *= 0.85;
+        }
 
         if (isSpecial && attacker.specialSkill) {
             attackPower *= attacker.specialSkill.multiplier;
@@ -1161,6 +1764,13 @@ const stage = {
 
         let rawDamage = (attackPower * critMultiplier) - defenseFactor;
         let finalDamage = Math.max(2, Math.round(rawDamage));
+
+        // Escudo Sagrado no alvo: Mitiga 50% de todo dano recebido!
+        if (target.statusEffects && target.statusEffects.some(s => s.type === 'holyShield')) {
+            finalDamage = Math.max(1, Math.round(finalDamage * 0.5));
+            this.showFloatingNumber(targetContainerId, '🛡️ ABSORVIDO 50%!', 'status-shield');
+            soundFx.playShield();
+        }
 
         target.life = Math.max(0, target.life - finalDamage);
 
@@ -1197,6 +1807,77 @@ const stage = {
             this.showFloatingNumber(targetContainerId, `-${finalDamage}`, 'normal');
             log.addMessage(`${attacker.name} atacou ${target.name} causando ${finalDamage} de dano.`, isHero ? 'hero' : 'monster');
         }
+
+        // Aplicação de Efeitos de Estado baseados em Classe / Criatura
+        if (target.life > 0) {
+            if (isHero) {
+                if (attacker.characterClass === 'rogue') {
+                    if (isSpecial) {
+                        this.applyStatus(target, 'poison', 3, 9, attacker);
+                    } else if (Math.random() < 0.45) {
+                        this.applyStatus(target, 'poison', 2, 7, attacker);
+                    }
+                } else if (attacker.characterClass === 'sorcerer') {
+                    if (isSpecial) {
+                        this.applyStatus(target, 'burn', 3, 11, attacker);
+                    } else if (Math.random() < 0.40) {
+                        this.applyStatus(target, 'burn', 2, 8, attacker);
+                    }
+                } else if (attacker.characterClass === 'berserker') {
+                    if (isSpecial || isCrit) {
+                        if (Math.random() < 0.80) this.applyStatus(target, 'bleed', 3, 10, attacker);
+                    } else if (Math.random() < 0.35) {
+                        this.applyStatus(target, 'bleed', 2, 7, attacker);
+                    }
+                } else if (attacker.characterClass === 'archer') {
+                    if (isSpecial) {
+                        this.applyStatus(target, 'bleed', 3, 9, attacker);
+                    } else if (isCrit) {
+                        this.applyStatus(target, 'bleed', 2, 8, attacker);
+                    }
+                } else if (attacker.characterClass === 'knight') {
+                    if (isSpecial && Math.random() < 0.50) {
+                        this.applyStatus(target, 'stun', 1, 0, attacker);
+                    } else if (Math.random() < 0.15) {
+                        this.applyStatus(target, 'stun', 1, 0, attacker);
+                    }
+                } else if (attacker.characterClass === 'cleric') {
+                    if (isSpecial) {
+                        this.applyStatus(attacker, 'holyShield', 2, 0, attacker);
+                    }
+                }
+            } else {
+                // Ataques de Monstros
+                if (attacker.characterClass === 'wild-wolf' && Math.random() < 0.55) {
+                    this.applyStatus(target, 'bleed', 3, 7, attacker);
+                } else if (attacker.characterClass === 'little-monster' && Math.random() < 0.45) {
+                    this.applyStatus(target, 'poison', 2, 6, attacker);
+                } else if (attacker.characterClass === 'big-monster' && Math.random() < 0.45) {
+                    this.applyStatus(target, 'burn', 2, 8, attacker);
+                } else if (attacker.characterClass === 'skeleton-archer' && Math.random() < 0.40) {
+                    this.applyStatus(target, 'bleed', 2, 6, attacker);
+                } else if (attacker.characterClass === 'goblin-shaman') {
+                    if (Math.random() < 0.50) this.applyStatus(target, 'poison', 2, 7, attacker);
+                    else this.applyStatus(target, 'burn', 2, 8, attacker);
+                } else if (attacker.characterClass === 'mimic') {
+                    if (Math.random() < 0.35) this.applyStatus(target, 'stun', 1, 0, attacker);
+                    else this.applyStatus(target, 'bleed', 2, 8, attacker);
+                } else if (attacker.characterClass === 'goblin-king') {
+                    if (isSpecial) {
+                        this.applyStatus(target, 'burn', 2, 8, attacker);
+                        this.applyStatus(target, 'poison', 2, 8, attacker);
+                    } else if (Math.random() < 0.35) {
+                        this.applyStatus(target, 'poison', 2, 6, attacker);
+                    }
+                } else if (attacker.characterClass === 'ancient-colossus' && isSpecial) {
+                    if (target.isDefending) {
+                        log.addMessage('🛡️ BLOQUEIO PERFEITO! Sua postura defensiva anulou o atordoamento do Cataclismo Sísmico!', 'heal');
+                    } else {
+                        this.applyStatus(target, 'stun', 1, 0, attacker);
+                    }
+                }
+            }
+        }
     },
 
     executeHeal(fighter) {
@@ -1218,12 +1899,37 @@ const stage = {
         fighter.isDefending = true;
         soundFx.playDefend();
         log.addMessage(`🛡️ ${fighter.name} assumiu uma postura defensiva reforçada! (+75% de absorção no próximo ataque)`, 'system');
+
+        // Clérigo e Cavaleiro ativam bênção divina defensiva
+        if (fighter.characterClass === 'cleric') {
+            this.applyStatus(fighter, 'holyShield', 2, 0, fighter);
+        } else if (fighter.characterClass === 'knight') {
+            this.applyStatus(fighter, 'holyShield', 1, 0, fighter);
+        }
     },
 
     monsterTurn() {
         if (this.isGameOver) return;
 
-        // IA do Colosso Ancestral: Mecânica de Golpe Sísmico Telegrafado
+        // 1. Resolução dos Efeitos de Estado no início do turno do Monstro
+        const monsterStatus = this.resolveTurnStartStatus(this.fighter2, false);
+        if (monsterStatus.died) {
+            this.endBattle(true);
+            return;
+        }
+
+        if (monsterStatus.isStunned) {
+            log.addMessage(`💫 ${this.fighter2.name} tentou se mover mas desabou atordoado, perdendo a vez!`, 'system');
+            this.fighter1.isDefending = false;
+            this.round++;
+            this.update();
+            setTimeout(() => {
+                this.beginPlayerTurn();
+            }, 1100);
+            return;
+        }
+
+        // 2. IA do Colosso Ancestral: Mecânica de Golpe Sísmico Telegrafado
         if (this.fighter2.characterClass === 'ancient-colossus') {
             if (this.fighter2.isTelegraphing) {
                 this.fighter2.isTelegraphing = false;
@@ -1231,11 +1937,10 @@ const stage = {
                 log.addMessage(`💥 O COLOSSO ANCESTRAL ESMAGA O CHÃO COM O CATACLISMO DE ROCHA!`, 'boss');
                 this.executeAttack(this.fighter2, this.fighter1, true);
             } else {
-                // 30% de chance de preparar ataque mortal
                 if (Math.random() < 0.35 && this.round > 1) {
                     this.fighter2.isTelegraphing = true;
                     soundFx.playBossAlert();
-                    log.addMessage(`⚠️ O Colosso ergue seus punhos titânicos preparando um CATACLISMO SÍSMICO! DEFEDA-SE NO PRÓXIMO TURNO!`, 'boss');
+                    log.addMessage(`⚠️ O Colosso ergue seus punhos titânicos preparando um CATACLISMO SÍSMICO! DEFENDA-SE NO PRÓXIMO TURNO!`, 'boss');
                     this.triggerBossNotice('AVISO: CATACLISMO SÍSMICO IMINENTE!');
                 } else {
                     this.executeAttack(this.fighter2, this.fighter1, false);
@@ -1246,7 +1951,7 @@ const stage = {
         else if (this.fighter2.characterClass === 'goblin-king') {
             const roll = Math.random();
             if (roll < 0.35) {
-                log.addMessage(`💣 O Rei dos Goblins arremessa uma bomba de fumaça e ordena investida de seus asseclas!`, 'boss');
+                log.addMessage(`💣 O Rei dos Goblins arremessa uma bomba explosiva tóxica!`, 'boss');
                 this.executeAttack(this.fighter2, this.fighter1, true);
             } else {
                 this.executeAttack(this.fighter2, this.fighter1, false);
@@ -1283,8 +1988,7 @@ const stage = {
         }
 
         this.round++;
-        this.isPlayerTurn = true;
-        this.update();
+        this.beginPlayerTurn();
     },
 
     endBattle(isVictory) {
@@ -1304,21 +2008,44 @@ const stage = {
             if (modalTitle) modalTitle.innerText = this.fighter2.isBoss ? 'CHEFÃO DERROTADO!' : 'Vitória Épica!';
             if (modalDesc) modalDesc.innerText = `Você subjugou ${this.fighter2.name} e garantiu seu nome na história da Arena dos Campeões!`;
             log.addMessage(`🏆 VITÓRIA! ${this.fighter1.name} conquistou a arena!`, 'crit');
+
+            // SISTEMA DE PROGRESSÃO: Ganho de XP e Level Up
+            const xpGained = this.fighter2.xpReward || 50;
+            const progResult = progressionSystem.addXp(this.fighter1.characterClass, xpGained);
+            progressionSystem.applyToHero(this.fighter1);
+            this.update();
+
+            log.addMessage(`⭐ ${this.fighter1.name} recebeu +${xpGained} XP pela vitória!`, 'system');
+
+            if (progResult.leveledUp) {
+                setTimeout(() => soundFx.playLevelUp(), 400);
+                this.triggerBossNotice(`⭐ LEVEL UP! NÍVEL ${progResult.newLevel}!`);
+                log.addMessage(`🎉 LEVEL UP! ${this.fighter1.name} alcançou o Nível ${progResult.newLevel}! (+${progResult.levelsGained * 2} Pontos de Atributo!)`, 'crit');
+            }
+
+            if (modalStats) {
+                modalStats.innerHTML = `
+                    <div><strong>${this.round}</strong> Turnos</div>
+                    <div><strong>+${xpGained} XP</strong> Ganho</div>
+                    <div><strong>${progResult.leveledUp ? `⭐ Nível ${progResult.newLevel}!` : `Nível ${this.fighter1.level}`}</strong></div>
+                    <div><strong>${this.fighter1.unspentPoints}</strong> Pts Disponíveis</div>
+                `;
+            }
         } else {
             soundFx.playDefeat();
             if (modalIcon) modalIcon.innerText = '💀';
             if (modalTitle) modalTitle.innerText = 'Derrota na Arena...';
             if (modalDesc) modalDesc.innerText = `${this.fighter2.name} aniquilou suas defesas. Forje novas táticas e tente novamente!`;
             log.addMessage(`💀 DERROTA! ${this.fighter1.name} caiu em combate...`, 'monster');
-        }
 
-        if (modalStats) {
-            modalStats.innerHTML = `
-                <div><strong>${this.round}</strong> Turnos</div>
-                <div><strong>${this.stats.damageDealt}</strong> Dano Causado</div>
-                <div><strong>${this.stats.critsLanded}</strong> Críticos</div>
-                <div><strong>${this.stats.healsUsed}</strong> Poções Usadas</div>
-            `;
+            if (modalStats) {
+                modalStats.innerHTML = `
+                    <div><strong>${this.round}</strong> Turnos</div>
+                    <div><strong>${this.stats.damageDealt}</strong> Dano Causado</div>
+                    <div><strong>Nível ${this.fighter1.level}</strong> Herói</div>
+                    <div><strong>${this.fighter1.currentXp}/${this.fighter1.neededXp}</strong> XP Atual</div>
+                `;
+            }
         }
 
         setTimeout(() => {
